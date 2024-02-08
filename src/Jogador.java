@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Scanner;
 
 public class Jogador {
     private static List<Jogador> melhoresJogadores = new ArrayList<>();
@@ -10,10 +11,12 @@ public class Jogador {
     private int numeroTentativas;
 
     public Jogador(String nome, int idade) {
-        this.nome = nome;
+        this.nome = verificarCadastro(nome);
         this.idade = idade;
         this.pontuacao = 0;
         this.numeroTentativas = 0;
+
+        setMelhorJogador();
     }
 
     public void adicionaPontos(int pontos){
@@ -72,8 +75,9 @@ public class Jogador {
         return melhoresJogadores;
     }
 
-    public static void setMelhorJogador(Jogador jogador) {
-        melhoresJogadores.add(jogador);
+    private void setMelhorJogador() {
+        melhoresJogadores.add(this);
+        ordenarMelhoresJogadores();
     }
 
     private void ordenarMelhoresJogadores() {
@@ -109,5 +113,29 @@ public class Jogador {
             }
         }
         System.out.println("************************************");
+    }
+
+    private String verificarCadastro(String nome) {
+        Scanner entrada = new Scanner(System.in);
+        String nomeVerificado = "";
+        String nomeParaVerificar = nome;
+        do {
+            if (jogadorExistente(nomeParaVerificar)){
+                System.out.print("Este jogador já é cadastrado, favor informar outro nome: ");
+                nomeParaVerificar = entrada.nextLine();
+            } else {
+                nomeVerificado = nomeParaVerificar;
+            }
+        } while (nomeVerificado.isEmpty());
+        return nomeVerificado;
+    }
+
+    private boolean jogadorExistente(String nome) {
+        for (Jogador jogador : melhoresJogadores) {
+            if (jogador.getNome().equals(nome)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
