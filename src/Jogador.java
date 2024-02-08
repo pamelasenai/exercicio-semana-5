@@ -83,4 +83,31 @@ public class Jogador {
             }
         });
     }
+
+    public void imprimirTopDezJogadores() {
+        ordenarMelhoresJogadores();
+        int limite = Math.min(melhoresJogadores.size(), 10);
+
+        System.out.println("------------------------------------");
+        System.out.println("          TOP 10 JOGADORES          ");
+        System.out.println("------------------------------------");
+        for (int i = 0; i < limite; i++) {
+            String nomeJogador = melhoresJogadores.get(i).getNome();
+            int posicao = i + 1;
+            System.out.println(nomeJogador + " " + posicao + "º lugar ");
+        }
+        System.out.println("------------------------------------");
+    }
+
+    public void imprimirPosicaoJogador(String nome){
+        ordenarMelhoresJogadores();
+        System.out.println("************************************");
+        for (Jogador jogador : melhoresJogadores) {
+            if(jogador.getNome().equals(nome)){
+                int posicao = melhoresJogadores.indexOf(jogador) + 1;
+                System.out.println(jogador.getNome() + " - " + "posição " + posicao);
+            }
+        }
+        System.out.println("************************************");
+    }
 }
