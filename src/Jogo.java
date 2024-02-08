@@ -7,7 +7,6 @@ public class Jogo {
     private Jogador jogador;
     private Scanner entrada = new Scanner(System.in);
 
-
     public Jogo() {
         numeroJogadas = 0;
     }
@@ -19,10 +18,12 @@ public class Jogo {
 
         while (true) {
             System.out.print("\nDigite sua jogada (1 - Pedra, 2 - Papel, 3 - Tesoura, 0 - SAIR): ");
-            int escolhaJogador = nextInt(entrada);
+            int escolhaJogador = solicitarJogada();
+
             if (escolhaJogador == 0) {
                 break;
             }
+
             numeroJogadas++;
             jogador.adicionaTentativa();
             int escolhaComputador = new Random().nextInt(3) + 1;
@@ -134,7 +135,18 @@ public class Jogo {
         }
     }
 
-    private static int nextInt(Scanner scn) {
+    private int solicitarJogada() {
+        while (true){
+            int escolhaJogador = nextInt(entrada);
+            if (escolhaJogador >= 0 && escolhaJogador < 4){
+                return escolhaJogador;
+            }
+            System.out.println("Opção invalida! Tente novamente.");
+            System.out.print("Digite sua jogada (1 - Pedra, 2 - Papel, 3 - Tesoura, 0 - SAIR): ");
+        }
+    }
+
+    private int nextInt(Scanner scn) {
         int i = scn.nextInt();
         scn.nextLine();
         return i;
