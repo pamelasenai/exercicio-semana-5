@@ -1,4 +1,9 @@
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+
 public class Jogador {
+    private static List<Jogador> melhoresJogadores = new ArrayList<>();
     private String nome;
     private int idade;
     private int pontuacao;
@@ -13,16 +18,17 @@ public class Jogador {
 
     public void adicionaPontos(int pontos){
         pontuacao += pontos;
+        ordenarMelhoresJogadores();
         System.out.println("O jogador " + nome + " ganhou mais " + pontos + " pontos.");
     }
 
     public void perdePontos(int pontos) {
         pontuacao -= pontos;
-        System.out.println("O jogador " + nome + " perdeu " + pontos + " pontos.");
-
         if (pontuacao < 0) {
             pontuacao = 0;
         }
+        ordenarMelhoresJogadores();
+        System.out.println("O jogador " + nome + " perdeu " + pontos + " pontos.");
     }
 
     public void adicionaTentativa(){
@@ -51,6 +57,7 @@ public class Jogador {
 
     public void setPontuacao(int pontuacao) {
         this.pontuacao = pontuacao;
+        ordenarMelhoresJogadores();
     }
 
     public int getNumeroTentativas() {
@@ -59,5 +66,21 @@ public class Jogador {
 
     public void setNumeroTentativas(int numeroTentativas) {
         this.numeroTentativas = numeroTentativas;
+    }
+
+    public static List<Jogador> getMelhoresJogadores() {
+        return melhoresJogadores;
+    }
+
+    public static void setMelhorJogador(Jogador jogador) {
+        melhoresJogadores.add(jogador);
+    }
+
+    private void ordenarMelhoresJogadores() {
+        melhoresJogadores.sort(new Comparator<Jogador>() {
+            public int compare(Jogador jogador1, Jogador jogador2) {
+                return jogador2.getPontuacao() - jogador1.getPontuacao();
+            }
+        });
     }
 }
