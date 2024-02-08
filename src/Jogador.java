@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 public class Jogador {
     private static List<Jogador> melhoresJogadores = new ArrayList<>();
+
     private String nome;
     private int idade;
     private int pontuacao;
