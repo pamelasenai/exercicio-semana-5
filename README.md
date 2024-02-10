@@ -2,7 +2,15 @@
 
 # Exercícios da Semana 5
 #### _(05/02/2024 a 09/02/2024)_
->
+> Cada exercício está em uma branch para facilitar o acesso ao código, segue links:  <br/>
+[Exercício 1](https://github.com/pamelasenai/exercicio-semana-5/tree/exercicio1) <br/>
+[Exercício 2](https://github.com/pamelasenai/exercicio-semana-5/tree/exercicio2) <br/>
+[Exercício 3](https://github.com/pamelasenai/exercicio-semana-5/tree/exercicio3) <br/>
+[Exercício 4](https://github.com/pamelasenai/exercicio-semana-5/tree/exercicio4) <br/>
+[Exercício 5](https://github.com/pamelasenai/exercicio-semana-5/tree/exercicio5) <br/>
+[Exercício 6](https://github.com/pamelasenai/exercicio-semana-5/tree/exercicio6) <br/>
+[Exercício 7](https://github.com/pamelasenai/exercicio-semana-5/tree/exercicio7) <br/>
+
 ---
 
 ## 📖 [M1S05] Ex 1 - Crie a Classe Jogador
