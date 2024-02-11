@@ -59,8 +59,8 @@ input no console. <br/>
 Crie na classe Main. <br/>
 No método main, a lógica de escolha dos jogos, ele deve rodar em um loop infinito. <br/>
 O jogador deve ou se identificar pelo nome, ou deve criar um novo jogador. <br/>
-O jogador deve poder escolher entre os jogos criados anteriormente, e ao final do jogo ele deve ter
-as opções: ver ranking completo, ver os 10 maiores, jogar novamente ou sair do jogo. <br/>
+O jogador deve poder escolher entre os jogos criados anteriormente.<br/>
+Ao final do jogo ele deve ter as opções: ver ranking completo, ver os 10 maiores, jogar novamente ou sair do jogo. <br/>
 As escolhas podem ser por números ou por letras, seguindo o seguinte exemplo: <br/>
 
 ```

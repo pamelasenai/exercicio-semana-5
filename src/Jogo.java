@@ -20,13 +20,13 @@ public class Jogo {
     }
 
     public void jogar(){
-        criarJogador();
         jogador.setNumeroTentativas(0);
         imprimirBoasVindasPedraPapelTesoura();
 
         while (true) {
             int escolhaJogador = solicitarJogadaPedraPapelTesoura();
             if (escolhaJogador == 0) {
+                System.out.println("\nSaindo...");
                 break;
             }
 
@@ -39,16 +39,18 @@ public class Jogo {
             System.out.println("\nO computador jogou: ");
             imprimirJogada(escolhaComputador);
             verificarVencedorPedraPapelTesoura(escolhaJogador, escolhaComputador, jogador);
+
+            imprimirMelhoresJogadores();
+
+            if (encerrarJogo()) {
+               return;
+            }
         }
 
-        if (retomarJogo()){
-            jogar();
-        }
     }
 
     public void jogar(int num){
         int limiteTentativas = num / 3;
-        criarJogador();
         jogador.setNumeroTentativas(0);
         imprimirBoasVindasNumeros(num, limiteTentativas);
         int escolhaComputador = new Random().nextInt(0, num + 1);
@@ -60,11 +62,14 @@ public class Jogo {
                 break;
             }
 
-            System.out.println("Tentativas: " + jogador.getNumeroTentativas() + "/" + limiteTentativas);
+            System.out.println("\nTentativas: " + jogador.getNumeroTentativas() + "/" + limiteTentativas);
             System.out.print("Digite seu chute (número entre 0 e " + num +" ou [s] para SAIR): ");
             int escolhaJogador = solicitarJogadaNumeros(num);
 
-            if (escolhaJogador == -1) break;
+            if (escolhaJogador == -1) {
+                System.out.println("\nSaindo...");
+                return;
+            }
 
             numeroJogadas++;
             jogador.adicionaTentativa();
@@ -73,7 +78,8 @@ public class Jogo {
             if (escolhaJogador == escolhaComputador) break;
         } while (limiteTentativas >= jogador.getNumeroTentativas());
 
-        if(retomarJogo()) {
+        imprimirMelhoresJogadores();
+        if(!encerrarJogo()) {
             int limite = solicitarLimiteIntervalo();
             jogar(limite);
         }
@@ -81,47 +87,73 @@ public class Jogo {
 
     private void imprimirBoasVindasPedraPapelTesoura() {
         System.out.println("\nBem-vindo ao jogo clássico!");
-        System.out.println("※ ~ × ~ × ~ × ~ × ~ × ~ × ~ × ~ × ~ ×  ※  × ~ × ~ × ~ × ~ × ~ × ~ × ~ × ~ × ~ ※");
-        System.out.println("                              PEDRA, PAPEL, TESOURA                              ");
-        System.out.println("※ ~ × ~ × ~ × ~ × ~ × ~ × ~ × ~ × ~ ×  ※  × ~ × ~ × ~ × ~ × ~ × ~ × ~ × ~ × ~ ※\n");
+        System.out.println(Utils.BLUE +
+            "※ ~ × ~ × ~ × ~ × ~ × ~ × ~ × ~ × ~ ×  ※  × ~ × ~ × ~ × ~ × ~ × ~ × ~ × ~ × ~ ※\n" +
+            "                              PEDRA, PAPEL, TESOURA                              \n" +
+            "※ ~ × ~ × ~ × ~ × ~ × ~ × ~ × ~ × ~ ×  ※  × ~ × ~ × ~ × ~ × ~ × ~ × ~ × ~ × ~ ※\n" +
+            Utils.RESET
+        );
         System.out.println("REGRAS DO JOGO");
-        System.out.println("==================================================================================");
+        System.out.println(
+            Utils.BLUE +
+            "==================================================================================" +
+            Utils.RESET
+        );
         System.out.println("Aqui, você deve escolher entre pedra, papel ou tesoura.");
         System.out.println("Sua escolha será comparada a escolha do computador e veremos quem será o vencedor.");
         System.out.println("Pedra quebra a Tesoura");
         System.out.println("Tesoura corta o Papel");
         System.out.println("Papel cobre a Pedra");
-        System.out.println("Faça sua escolha e que vença o melhor!\n");
+        System.out.println("Faça sua escolha e que vença o melhor!");
+        System.out.println(
+            Utils.BLUE +
+            "==================================================================================" +
+            Utils.RESET
+        );
     }
 
     private void imprimirBoasVindasNumeros(int maximo, int limiteTentativas) {
         System.out.println("\nBem-vindo ao jogo");
-        System.out.println("※ ~ × ~ × ~ × ~ × ~ × ~ × ~ × ~ × ~ ×  ※  × ~ × ~ × ~ × ~ × ~ × ~ × ~ × ~ × ~ ※");
-        System.out.println("                                 ACERTE O NÚMERO                                 ");
-        System.out.println("※ ~ × ~ × ~ × ~ × ~ × ~ × ~ × ~ × ~ ×  ※  × ~ × ~ × ~ × ~ × ~ × ~ × ~ × ~ × ~ ※\n");
+        System.out.println(Utils.BLUE +
+            "※ ~ × ~ × ~ × ~ × ~ × ~ × ~ × ~ × ~ ×  ※  × ~ × ~ × ~ × ~ × ~ × ~ × ~ × ~ × ~ ※\n" +
+            "                                 ACERTE O NÚMERO                                 \n" +
+            "※ ~ × ~ × ~ × ~ × ~ × ~ × ~ × ~ × ~ ×  ※  × ~ × ~ × ~ × ~ × ~ × ~ × ~ × ~ × ~ ※\n" +
+            Utils.RESET
+        );
         System.out.println("REGRAS DO JOGO");
-        System.out.println("==================================================================================");
+        System.out.println(
+            Utils.BLUE +
+            "==================================================================================" +
+            Utils.RESET
+        );
         System.out.println("O computador irá escolher um número aleatório entre 0 e " + maximo + ".");
         System.out.println("Você terá " + limiteTentativas + " chances para adivinhar o número escolhido.");
         System.out.println("Caso acerte você ganhará um ponto.");
-        System.out.println("Caso erre você perderá um ponto.\n");
+        System.out.println("Caso erre você perderá um ponto.");
+        System.out.println(
+            Utils.BLUE +
+            "==================================================================================" +
+            Utils.RESET
+        );
     }
 
-    private void criarJogador() {
-        System.out.println("+--------------------+");
-        System.out.println("|  Login / cadastro  |");
-        System.out.println("+--------------------+");
+    public void criarJogador() {
+        System.out.println(
+            "\n▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀\n" +
+            "           LOGIN / CADASTRO         \n" +
+            "▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀"
+        );
         System.out.print("Digite seu nome: ");
         String nome = entrada.nextLine();
         System.out.print("Digite sua idade: ");
-        int idade = nextInt(entrada);
+        int idade = Utils.nextInt(entrada);
 
         if (Jogador.ehCadastrado(nome)){
             System.out.println("Este jogador já é cadastrado.");
             System.out.print("Deseja logar com o cadastro já existente? ( 1- sim, 0 - não): ");
-            int opcao = nextInt(entrada);
+            int opcao = Utils.nextInt(entrada);
             if (opcao == 1) {
-                jogador = jogador.getJogadorPorNome(nome);
+                jogador = Jogador.getJogadorPorNome(nome);
             } else {
                 criarJogador();
             }
@@ -131,17 +163,14 @@ public class Jogo {
     }
 
     private boolean retomarJogo() {
-        melhorJogador = Jogador.getMelhoresJogadores().get(0);
-        jogador.imprimirTopDezJogadores();
-        jogador.imprimirPosicaoJogador(jogador.getNome());
 
-        System.out.print("Deseja iniciar uma partida com um novo jogador (1 - sim, 0 - não)? ");
-        int opcao = nextInt(entrada);
+
+        System.out.print("Deseja iniciar uma nova partida? (1 - sim, 0 - não)? ");
+        int opcao = Utils.nextInt(entrada);
         if (opcao == 1){
             return true;
         }
-        entrada.close();
-        System.out.println("Encerrando........");
+        System.out.println("Retornando ao menu anterior.");
         return false;
     }
 
@@ -174,6 +203,12 @@ public class Jogo {
         }
     }
 
+    private void imprimirMelhoresJogadores() {
+        melhorJogador = Jogador.getMelhoresJogadores().get(0);
+        Jogador.imprimirTopDezJogadores();
+        jogador.imprimirPosicaoJogador(jogador.getNome());
+    }
+
     private void imprimirJogada(int jogada){
         switch (jogada) {
             case 0:
@@ -195,54 +230,83 @@ public class Jogo {
     }
 
     private void imprimirMensagemVitoria() {
-        System.out.println("※~※~※~※~※~ VOCÊ GANHOU ~※~※~※~※~※");
+        System.out.println(Utils.GREEN + "※~※~※~※~※~ VOCÊ GANHOU ~※~※~※~※~※" + Utils.RESET);
     }
 
     private void imprimirMensagemDerrota() {
-        System.out.println("~×~×~×~×~×~×~ VOCÊ PERDEU ~×~×~×~×~×~×~");
+        System.out.println(Utils.RED + "~×~×~×~×~×~×~ VOCÊ PERDEU ~×~×~×~×~×~×~" + Utils.RESET);
     }
 
     private void imprimirMensagemEmpate() {
-        System.out.println("~=~=~=~=~=~=~=~ EMPATOU ~=~=~=~=~=~=~=~");
+        System.out.println(Utils.YELLOW + "~=~=~=~=~=~=~=~ EMPATOU ~=~=~=~=~=~=~=~" + Utils.RESET);
     }
 
     private void imprimirPedra() {
-        System.out.println(
+        System.out.println(Utils.PURPLE +
+                "PEDRA \n" +
                 "    _______        \n" +
                 "---'   ____)       \n" +
                 "      (_____)      \n" +
                 "      (_____)      \n" +
                 "      (____)       \n" +
-                "---.__(___)"
+                "---.__(___)" + Utils.RESET
         );
     }
 
     private void imprimirPapel() {
-        System.out.println(
+        System.out.println(Utils.PURPLE +
+                "PAPEL \n" +
                 "    _______        \n" +
                 "---'   ____)____   \n" +
                 "          ______)  \n" +
                 "          _______) \n" +
                 "         _______)  \n" +
-                "---.__________)"
+                "---.__________)" + Utils.RESET
         );
     }
 
     private void imprimirTesoura() {
-        System.out.println(
+        System.out.println(Utils.PURPLE +
+                "TESOURA \n" +
                 "    _______        \n" +
                 "---'   ____)____   \n" +
                 "          ______)  \n" +
                 "       __________) \n" +
                 "      (____)       \n" +
-                "---.__(___) "
+                "---.__(___) " + Utils.RESET
         );
     }
 
+    private void imprimirMenu() {
+        System.out.print(Utils.BLUE +
+                "\n▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀\n" +
+                "                MENU                \n" +
+                "▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀\n" + Utils.RESET +
+                "[1] Ver ranking completo\n" +
+                "[2] Ver top 10\n" +
+                "[3] Jogar novamente\n" +
+                "[4] Encerrar o Jogo\n" + Utils.BLUE +
+                "▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀\n" + Utils.RESET +
+                "Digite qual das opções acima você deseja seguir: "
+        );
+    }
+
+    private static void imprimirRankingJogadores() {
+        System.out.println("\n▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀");
+        System.out.println("            RANKING GERAL           ");
+        System.out.println("▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀");
+        for (Jogador jogador : Jogador.getMelhoresJogadores()) {
+            String nomeJogador = jogador.getNome();
+            int posicao = Jogador.getMelhoresJogadores().indexOf(jogador);
+            System.out.println(nomeJogador + " " + posicao + "º lugar ");
+        }
+        System.out.println("▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀");
+    }
+
     private int solicitarJogadaPedraPapelTesoura() {
-        System.out.print("Digite sua jogada (1 - Pedra, 2 - Papel, 3 - Tesoura, 0 - SAIR): ");
+        System.out.print("\nDigite sua jogada (1 - Pedra, 2 - Papel, 3 - Tesoura, 0 - SAIR): ");
         while (true){
-            int escolhaJogador = nextInt(entrada);
+            int escolhaJogador = Utils.nextInt(entrada);
             if (escolhaJogador >= 0 && escolhaJogador < 4){
                 return escolhaJogador;
             }
@@ -272,18 +336,12 @@ public class Jogo {
         }
     }
 
-    private int nextInt(Scanner scanner) {
-        int numero = scanner.nextInt();
-        scanner.nextLine();
-        return numero;
-    }
-
     public int solicitarLimiteIntervalo() {
         int limite;
-        System.out.println("Vamos criar um limite para gerar um número aleatório que você irá adivinhar.");
+        System.out.println("\nVamos criar um limite para gerar um número aleatório que você irá adivinhar.");
         while (true) {
             System.out.print("Informe um número para o limite:  ");
-            limite = nextInt(entrada);
+            limite = Utils.nextInt(entrada);
             if (limite == 0 || limite < 0){
                 System.out.println("Opção inválida, tente novamente.");
             } else {
@@ -291,5 +349,32 @@ public class Jogo {
             }
         }
         return limite;
+    }
+
+    private boolean encerrarJogo() {
+        imprimirMenu();
+        int escolha = Utils.nextInt(entrada);
+
+        switch (escolha) {
+            case 1:
+                imprimirRankingJogadores();
+                encerrarJogo();
+                break;
+            case 2:
+                Jogador.imprimirTopDezJogadores();
+                encerrarJogo();
+                break;
+            case 3:
+                System.out.println("Iniciando nova partida...");
+                return false;
+            case 4:
+                System.out.println("Encerrando o Jogo...");
+                return true;
+            default:
+                System.out.println("Opção inválida!");
+                encerrarJogo();
+                break;
+        }
+        return false;
     }
 }

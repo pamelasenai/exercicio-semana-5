@@ -38,7 +38,7 @@ public class Jogador {
         numeroTentativas++;
     }
 
-    private void ordenarMelhoresJogadores() {
+    private static void ordenarMelhoresJogadores() {
         melhoresJogadores.sort(new Comparator<Jogador>() {
             public int compare(Jogador jogador1, Jogador jogador2) {
                 return jogador2.getPontuacao() - jogador1.getPontuacao();
@@ -46,34 +46,34 @@ public class Jogador {
         });
     }
 
-    public void imprimirTopDezJogadores() {
+    public static void imprimirTopDezJogadores() {
         ordenarMelhoresJogadores();
         int limite = Math.min(melhoresJogadores.size(), 10);
 
-        System.out.println("------------------------------------");
+        System.out.println("\n▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀");
         System.out.println("          TOP 10 JOGADORES          ");
-        System.out.println("------------------------------------");
+        System.out.println("▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀");
         for (int i = 0; i < limite; i++) {
             String nomeJogador = melhoresJogadores.get(i).getNome();
             int posicao = i + 1;
             System.out.println(nomeJogador + " " + posicao + "º lugar ");
         }
-        System.out.println("------------------------------------");
+        System.out.println("▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀");
     }
 
     public void imprimirPosicaoJogador(String nome){
         ordenarMelhoresJogadores();
-        System.out.println("************************************");
+        System.out.println(Utils.BLUE + "\n~※~※~※~※~※~※~※~※~※~※~※~※~※~※~※~" + Utils.RESET);
         for (Jogador jogador : melhoresJogadores) {
             if(jogador.getNome().equals(nome)){
                 int posicao = melhoresJogadores.indexOf(jogador) + 1;
                 System.out.println(jogador.getNome() + " - " + "posição " + posicao);
             }
         }
-        System.out.println("************************************");
+        System.out.println(Utils.BLUE + "~※~※~※~※~※~※~※~※~※~※~※~※~※~※~※~" + Utils.RESET);
     }
 
-    public Jogador getJogadorPorNome(String nome) {
+    public static Jogador getJogadorPorNome(String nome) {
         for (Jogador jogador : melhoresJogadores) {
             if (jogador.getNome().equals(nome)) {
                 return jogador;
@@ -125,6 +125,7 @@ public class Jogador {
     }
 
     public static List<Jogador> getMelhoresJogadores() {
+        ordenarMelhoresJogadores();
         return melhoresJogadores;
     }
 
