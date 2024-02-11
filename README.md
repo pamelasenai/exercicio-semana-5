@@ -10,6 +10,7 @@
 [Exercício 5](https://github.com/pamelasenai/exercicio-semana-5/tree/exercicio5) <br/>
 [Exercício 6](https://github.com/pamelasenai/exercicio-semana-5/tree/exercicio6) <br/>
 [Exercício 7](https://github.com/pamelasenai/exercicio-semana-5/tree/exercicio7) <br/>
+[Exercício 8](https://github.com/pamelasenai/exercicio-semana-5/tree/exercicio8) <br/>
 
 ---
 
